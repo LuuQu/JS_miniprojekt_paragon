@@ -7,11 +7,11 @@
 	4. Edycja istniejących elementów    ---------------------  Done
 	5. Przesuwanie elementów    -----------------------------  Done
 	6. Dodanie formularza   ---------------------------------  Done
-	7. Dodanie komunikatów po każdej z czynności    ---------
-    8. Utworzenie LocalStorage  -----------------------------
-    9. Pobieranie danych z LocalStorage i ich wyświetlenie --
+	7. Dodanie komunikatów po każdej z czynności    ---------  
+    8. Utworzenie LocalStorage  -----------------------------  
+    9. Pobieranie danych z LocalStorage i ich wyświetlenie --  
     10. Dodanie przycisku do edycji -------------------------  Done
-    11. Dodanie przycisku do usuwania   ---------------------  
+    11. Dodanie przycisku do usuwania   ---------------------  Done
     12. Dodanie przycisku do przesunięcia produktu w górę  --  Done
     13. dodanie przycisku do przesunięcia produktu w dół  ---  Done
 	
@@ -35,11 +35,14 @@ function initializeTable() {
     let button = document.createElement("input");
     button.setAttribute("type","button");
     button.value = "Nowy produkt";
+    button.className = "new";
     cell.colSpan = 2;
     button.addEventListener("click",() => {
-        if(form == null) {
-            createForm("Dodaj");
+        if(form != null) {
+            form.remove();
+            form = null;
         }
+        createForm("Dodaj");
     })
     cell.appendChild(button);
     row.appendChild(cell);
@@ -132,12 +135,18 @@ function addButtons(row) {
     let element = document.createElement("td");
     let button1 = document.createElement("input");
     button1.setAttribute("type","button");
+    button1.className = "edit";
     button1.value = "Edytuj";
     button1.addEventListener("click",() => {
+        if(form != null) {
+            form.remove();
+            form = null;
+        }
         createForm("Edytuj",row.children[0].textContent, row.children[1].textContent,row.children[2].textContent,row.children[3].textContent);
     })
     let button2 = document.createElement("input");
     button2.setAttribute("type","button");
+    button2.className = "delete";
     button2.value = "Usuń";
     button2.addEventListener("click",() => {
         deleteElementFromTable(parseInt(row.children[0].textContent));
@@ -235,6 +244,7 @@ function createForm(buttonText, id,name,price,quantity) {
     }
     let applyButton = document.createElement("input");
     applyButton.setAttribute("type","button");
+    applyButton.className = "addFromForm";
     if(typeof buttonText === 'string') {
         applyButton.value = buttonText;
     } 
