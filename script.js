@@ -10,6 +10,10 @@
 	7. Dodanie komunikatów po każdej z czynności    ---------
     8. Utworzenie LocalStorage  -----------------------------
     9. Pobieranie danych z LocalStorage i ich wyświetlenie --
+    10. Dodanie przycisku do edycji -------------------------
+    11. Dodanie przycisku do usuwania   ---------------------
+    12. Dodanie przycisku do przesunięcia produktu w górę  --
+    13. dodanie przycisku do przesunięcia produktu w dół  ---
 	
 =====================================================================
 */
