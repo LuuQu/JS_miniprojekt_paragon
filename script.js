@@ -42,7 +42,9 @@ function initializeTable() {
             form.remove();
             form = null;
         }
-        createForm("Dodaj");
+        else {
+            createForm("Dodaj");
+        }
     })
     cell.appendChild(button);
     row.appendChild(cell);
@@ -142,7 +144,9 @@ function addButtons(row) {
             form.remove();
             form = null;
         }
-        createForm("Edytuj",row.children[0].textContent, row.children[1].textContent,row.children[2].textContent,row.children[3].textContent);
+        else {
+            createForm("Edytuj",row.children[0].textContent, row.children[1].textContent,row.children[2].textContent,row.children[3].textContent);
+        }
     })
     let button2 = document.createElement("input");
     button2.setAttribute("type","button");
@@ -150,6 +154,10 @@ function addButtons(row) {
     button2.value = "Usuń";
     button2.addEventListener("click",() => {
         deleteElementFromTable(parseInt(row.children[0].textContent));
+        if(form != null) {
+            form.remove();
+            form = null;
+        }
     })
     let br = document.createElement("br");
     element.appendChild(button1);
