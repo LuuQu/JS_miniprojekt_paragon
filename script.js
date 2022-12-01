@@ -20,9 +20,9 @@
 var table = document.createElement("table");
 var form;
 initializeTable();
-//addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
-//addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
-//addNewElementToTable("Jabłko",0.5,10);    //Test dla dodawania elementu
+addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
+addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
+addNewElementToTable("Jabłko",0.5,10);    //Test dla dodawania elementu
 //deleteElementFromTable(1);                //Test dla usuwania elementu
 function initializeTable() {
     let row = document.createElement("tr");
@@ -51,6 +51,75 @@ function addElementToRow(row,text) {
     element.textContent = text;
     row.appendChild(element);
 }
+function addArrow() {
+    let row, typeofarrow;
+    if(arguments.length == 1) {
+        row = arguments[0];
+    }
+    else if(arguments.length == 2) {
+        row = arguments[0];
+        typeofarrow = arguments[1];
+    }
+    if(row.children.length > 0) {
+        let length = row.children.length - 1;
+        while(length >= 0) {
+            row.children[length].remove();
+            length--;
+        }
+    }
+    let arrow = document.createElement("i");
+    arrow.setAttribute("type","button");
+    if(arguments.length == 2) {
+        arrow.className = typeofarrow;
+        switch(typeofarrow) {
+            case "arrow up":
+                arrow.addEventListener("click",() => {
+                    console.log("up");
+
+                })
+                break;
+            case "arrow down":
+                arrow.addEventListener("click",() => {
+                    console.log("down");
+                })
+                break;
+            default:
+                break;
+        }
+        row.appendChild(arrow);
+        return;
+    }
+    arrow.addEventListener("click",() => {
+        console.log("up");
+    })
+    arrow.className = "arrow up";
+    let arrow2 = document.createElement("i");
+    arrow2.className = "arrow down";
+    arrow2.setAttribute("type","button");
+    arrow2.addEventListener("click",() => {
+        console.log("down");
+    })
+    let br = document.createElement("br");
+    
+    row.appendChild(arrow);
+    row.appendChild(br);
+    row.appendChild(arrow2);
+}
+function addButtons(row) {
+    let element = document.createElement("td");
+    let button1 = document.createElement("input");
+    button1.setAttribute("type","button");
+    button1.value = "Edytuj";
+    let button2 = document.createElement("input");
+    button2.setAttribute("type","button");
+    button2.value = "Usuń";
+    let br = document.createElement("br");
+    element.appendChild(button1);
+    element.appendChild(br);
+    element.appendChild(button2);
+    row.appendChild(element);
+    
+}
 function addNewElementToTable(name, price, quantity) {
     let number = table.children.length;
     let row = document.createElement("tr");
@@ -59,6 +128,19 @@ function addNewElementToTable(name, price, quantity) {
     addElementToRow(row,price);
     addElementToRow(row,quantity);
     addElementToRow(row,(price*quantity));
+    addButtons(row);
+    addElementToRow(row);
+    if(number > 1) {
+        addArrow(row.children[6], "arrow up");
+        let prevRow = table.children[number-1];
+        if(number == 2) {
+            addArrow(prevRow.children[6], "arrow down");
+        }
+        else {
+            prevRow.children[6] = document.createElement("td");
+            addArrow(prevRow.children[6]);
+        }
+    }
     table.appendChild(row);
 }
 function deleteElementFromTable(id) {
