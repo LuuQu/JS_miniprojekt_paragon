@@ -2,8 +2,8 @@
 =====================================================================
 			TODO:
 	1. Utworzenie Tabeli  -----------------------------------  Done
-	2. Dodawanie nowych elementów   -------------------------
-	3. Usuwanie istniejących elementów ----------------------
+	2. Dodawanie nowych elementów   -------------------------  Done
+	3. Usuwanie istniejących elementów ----------------------  Done
 	4. Edycja istniejących elementów    ---------------------
 	5. Przesuwanie elementów    -----------------------------
 	6. Dodanie formularza   ---------------------------------
@@ -15,7 +15,10 @@
 */
 var table = document.createElement("table");
 initializeTable();
-addNewElementToTable("Gruszka",1.5,3); //Test dla dodawania elementu
+//addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
+//addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
+//addNewElementToTable("Jabłko",0.5,10);    //Test dla dodawania elementu
+//deleteElementFromTable(1);                //Test dla usuwania elementu
 function initializeTable() {
     let row = document.createElement("tr");
     addElementToRow(row,"LP");
@@ -42,4 +45,18 @@ function addNewElementToTable(name, price, quantity) {
     addElementToRow(row,quantity);
     addElementToRow(row,(price*quantity));
     table.appendChild(row);
+}
+function deleteElementFromTable(id) {
+    let number = table.children.length;
+    if(number < (id+1)) {
+        return;
+    }
+    table.children[id].remove();
+    if(number == (id+1)) {
+        return;
+    }
+    while((id+1) < number) {
+        id++;
+        table.children[id-1].children[0].textContent--;
+    }
 }
