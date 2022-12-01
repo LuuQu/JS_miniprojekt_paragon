@@ -74,30 +74,53 @@ function addArrow() {
         switch(typeofarrow) {
             case "arrow up":
                 arrow.addEventListener("click",() => {
-                    console.log("up");
-
+                    changeButtons(row.parentElement,row.parentElement.parentElement.children[row.parentElement.children[0].textContent - 1]);
                 })
                 break;
             case "arrow down":
                 arrow.addEventListener("click",() => {
-                    console.log("down");
+                    changeButtons(row.parentElement,row.parentElement.parentElement.children[parseInt(row.parentElement.children[0].textContent)+1]);
                 })
                 break;
             default:
                 break;
         }
+        arrow.addEventListener("mouseover",() => {
+            arrow.style.borderColor = "#606060";
+            arrow.style.cursor = "pointer";
+        })
+        arrow.addEventListener("mouseout",() => {
+            arrow.style.borderColor = "black";
+            arrow.style.cursor = "default";
+        })
         row.appendChild(arrow);
         return;
     }
     arrow.addEventListener("click",() => {
-        console.log("up");
+        changeButtons(row.parentElement,row.parentElement.parentElement.children[row.parentElement.children[0].textContent - 1]);
+    })
+    arrow.addEventListener("mouseover",() => {
+        arrow.style.borderColor = "#606060";
+        arrow.style.cursor = "pointer";
+    })
+    arrow.addEventListener("mouseout",() => {
+        arrow.style.borderColor = "black";
+        arrow.style.cursor = "default";
     })
     arrow.className = "arrow up";
     let arrow2 = document.createElement("i");
     arrow2.className = "arrow down";
     arrow2.setAttribute("type","button");
     arrow2.addEventListener("click",() => {
-        console.log("down");
+        changeButtons(row.parentElement,row.parentElement.parentElement.children[parseInt(row.parentElement.children[0].textContent)+1]);
+    })
+    arrow2.addEventListener("mouseover",() => {
+        arrow2.style.borderColor = "#606060";
+        arrow2.style.cursor = "pointer";
+    })
+    arrow2.addEventListener("mouseout",() => {
+        arrow2.style.borderColor = "black";
+        arrow2.style.cursor = "default";
     })
     let br = document.createElement("br");
     
@@ -194,9 +217,6 @@ function createForm(buttonText) {
         applyButton.value = "Dodaj";
     }
     applyButton.addEventListener("click",() => {
-        console.log(nameInput.value);
-        console.log(priceInput.value);
-        console.log(quantityInput.value);
         if(nameInput.value.length === 0) {
             return;
         }
@@ -209,7 +229,7 @@ function createForm(buttonText) {
         if(isNaN(parseFloat(priceInput.value)) || isNaN(parseInt(quantityInput.value))) {
             return;
         }
-        addNewElementToTable(nameInput.value,parseFloat(priceInput.value),parseInt(quantityInput.value));
+        addNewElementToTable(nameInput.value,Math.floor(parseFloat(priceInput.value)*100)/100,parseInt(quantityInput.value));
         form.remove();
         form = null;
     })
@@ -232,4 +252,17 @@ function createForm(buttonText) {
     form.appendChild(br);
     form.appendChild(applyButton);
     document.body.appendChild(form);
+}
+function changeButtons(element1,element2) {
+    let name = element1.children[1].textContent;
+    let price = element1.children[2].textContent;
+    let quantity = element1.children[3].textContent;
+    element1.children[1].textContent = element2.children[1].textContent;
+    element1.children[2].textContent = element2.children[2].textContent;
+    element1.children[3].textContent = element2.children[3].textContent;
+    element1.children[4].textContent = element1.children[2].textContent * element1.children[3].textContent;
+    element2.children[1].textContent = name;
+    element2.children[2].textContent = price;
+    element2.children[3].textContent = quantity;
+    element2.children[4].textContent = element2.children[2].textContent * element2.children[3].textContent;
 }
