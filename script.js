@@ -133,6 +133,9 @@ function addButtons(row) {
     let button1 = document.createElement("input");
     button1.setAttribute("type","button");
     button1.value = "Edytuj";
+    button1.addEventListener("click",() => {
+        createForm("Edytuj",row.children[0].textContent, row.children[1].textContent,row.children[2].textContent,row.children[3].textContent);
+    })
     let button2 = document.createElement("input");
     button2.setAttribute("type","button");
     button2.value = "Usuń";
@@ -180,7 +183,7 @@ function deleteElementFromTable(id) {
         table.children[id-1].children[0].textContent--;
     }
 }
-function editElementFromTalbe(id,name,price,quantity) {
+function editElementFromTable(id,name,price,quantity) {
     let number = table.children.length;
     if(number < (id+1) || id == 0) {
         return;
@@ -191,7 +194,7 @@ function editElementFromTalbe(id,name,price,quantity) {
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
 }
-function createForm(buttonText) {
+function createForm(buttonText, id,name,price,quantity) {
     form = document.createElement("form");
     form.setAttribute("method","post");
     let br = document.createElement("br");
@@ -199,15 +202,24 @@ function createForm(buttonText) {
     let nameLabel = document.createElement("label");
     let nameInput = document.createElement("input");
     nameLabel.textContent = "Nazwa";
-
+    if(name != null) {
+        nameInput.value = name;
+    }
     let priceLabel = document.createElement("label");
     let priceInput = document.createElement("input");
     priceInput.setAttribute("type","number");
     priceLabel.textContent = "Cena";
+    if(price != null) {
+        priceInput.value = price;
+    }
 
     let quantityLabel = document.createElement("label");
     let quantityInput = document.createElement("input");
+    quantityInput.setAttribute("type","number");
     quantityLabel.textContent = "Ilość";
+    if(quantity != null) {
+        quantityInput.value = quantity;
+    }
     let applyButton = document.createElement("input");
     applyButton.setAttribute("type","button");
     if(typeof buttonText === 'string') {
@@ -229,7 +241,12 @@ function createForm(buttonText) {
         if(isNaN(parseFloat(priceInput.value)) || isNaN(parseInt(quantityInput.value))) {
             return;
         }
-        addNewElementToTable(nameInput.value,Math.floor(parseFloat(priceInput.value)*100)/100,parseInt(quantityInput.value));
+        if(id != null) {
+            editElementFromTable(parseInt(id),nameInput.value,Math.floor(parseFloat(priceInput.value)*100)/100,parseInt(quantityInput.value));
+        }
+        else {
+            addNewElementToTable(nameInput.value,Math.floor(parseFloat(priceInput.value)*100)/100,parseInt(quantityInput.value));
+        }
         form.remove();
         form = null;
     })
