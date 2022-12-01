@@ -15,7 +15,7 @@
 */
 var table = document.createElement("table");
 initializeTable();
-test();
+addNewElementToTable("Gruszka",1.5,3); //Test dla dodawania elementu
 function initializeTable() {
     let row = document.createElement("tr");
     addElementToRow(row,"LP");
@@ -32,4 +32,14 @@ function addElementToRow(row,text) {
     let element = document.createElement("td");
     element.textContent = text;
     row.appendChild(element);
+}
+function addNewElementToTable(name, price, quantity) {
+    let number = table.children.length;
+    let row = document.createElement("tr");
+    addElementToRow(row,number);
+    addElementToRow(row,name);
+    addElementToRow(row,price);
+    addElementToRow(row,quantity);
+    addElementToRow(row,(price*quantity));
+    table.appendChild(row);
 }
