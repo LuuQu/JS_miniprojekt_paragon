@@ -4,7 +4,7 @@
 	1. Utworzenie Tabeli  -----------------------------------  Done
 	2. Dodawanie nowych elementów   -------------------------  Done
 	3. Usuwanie istniejących elementów ----------------------  Done
-	4. Edycja istniejących elementów    ---------------------
+	4. Edycja istniejących elementów    ---------------------  Done
 	5. Przesuwanie elementów    -----------------------------
 	6. Dodanie formularza   ---------------------------------
 	7. Dodanie komunikatów po każdej z czynności    ---------
@@ -59,4 +59,15 @@ function deleteElementFromTable(id) {
         id++;
         table.children[id-1].children[0].textContent--;
     }
+}
+function editElementFromTalbe(id,name,price,quantity) {
+    let number = table.children.length;
+    if(number < (id+1) || id == 0) {
+        return;
+    }
+    let activeRow = table.children[id];
+    activeRow.children[1].textContent = name;
+    activeRow.children[2].textContent = price;
+    activeRow.children[3].textContent = quantity;
+    activeRow.children[4].textContent = price*quantity;
 }
