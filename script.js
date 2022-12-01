@@ -5,15 +5,15 @@
 	2. Dodawanie nowych elementów   -------------------------  Done
 	3. Usuwanie istniejących elementów ----------------------  Done
 	4. Edycja istniejących elementów    ---------------------  Done
-	5. Przesuwanie elementów    -----------------------------
+	5. Przesuwanie elementów    -----------------------------  Done
 	6. Dodanie formularza   ---------------------------------  Done
 	7. Dodanie komunikatów po każdej z czynności    ---------
     8. Utworzenie LocalStorage  -----------------------------
     9. Pobieranie danych z LocalStorage i ich wyświetlenie --
-    10. Dodanie przycisku do edycji -------------------------
-    11. Dodanie przycisku do usuwania   ---------------------
-    12. Dodanie przycisku do przesunięcia produktu w górę  --
-    13. dodanie przycisku do przesunięcia produktu w dół  ---
+    10. Dodanie przycisku do edycji -------------------------  Done
+    11. Dodanie przycisku do usuwania   ---------------------  
+    12. Dodanie przycisku do przesunięcia produktu w górę  --  Done
+    13. dodanie przycisku do przesunięcia produktu w dół  ---  Done
 	
 =====================================================================
 */
@@ -139,6 +139,9 @@ function addButtons(row) {
     let button2 = document.createElement("input");
     button2.setAttribute("type","button");
     button2.value = "Usuń";
+    button2.addEventListener("click",() => {
+        deleteElementFromTable(parseInt(row.children[0].textContent));
+    })
     let br = document.createElement("br");
     element.appendChild(button1);
     element.appendChild(br);
@@ -173,6 +176,16 @@ function deleteElementFromTable(id) {
     let number = table.children.length;
     if(number < (id+1)) {
         return;
+    }
+    if((id == 1 && number == 3) || (id == 2 && number == 3)) {
+        table.children[1].children[6].remove();
+        table.children[2].children[6].remove();
+    }
+    else if(id == 1 && number > 2) {
+        addArrow(table.children[2].children[6],"arrow down");
+    }
+    else if(id == (table.children.length-1) && number > 2) {
+        addArrow(table.children[table.children.length-2].children[6],"arrow up");
     }
     table.children[id].remove();
     if(number == (id+1)) {
