@@ -17,12 +17,20 @@
 	
 =====================================================================
 */
+
 var table = document.createElement("table");
 var form;
 initializeTable();
+
+let paragon = JSON.parse(localStorage.getItem("paragon"))
+console.log(paragon)
+Deserialize(paragon)
+localStorage.removeItem("paragon")
+localStorage.clear("paragon")
 addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
 addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
-addNewElementToTable("Jabłko",0.5,10);    //Test dla dodawania elementu
+addNewElementToTable("Jabłko",0.5,10);   //Test dla dodawania elementu
+//addNewElementToTable("Woda",0.9,20);    //Test dla dodawania elementu
 //deleteElementFromTable(1);                //Test dla usuwania elementu
 function initializeTable() {
     let row = document.createElement("tr");
@@ -205,6 +213,10 @@ function deleteElementFromTable(id) {
         addArrow(table.children[table.children.length-2].children[6],"arrow up");
     }
     table.children[id].remove();
+    localStorage.removeItem("paragon")
+    localStorage.clear("paragon")
+    let json = JSON.stringify(Serialize(table, table.children.length))
+    localStorage.setItem("paragon", json)
     if(number == (id+1)) {
         return;
     }
@@ -212,6 +224,8 @@ function deleteElementFromTable(id) {
         id++;
         table.children[id-1].children[0].textContent--;
     }
+    
+
 }
 function editElementFromTable(id,name,price,quantity) {
     let number = table.children.length;
@@ -223,6 +237,11 @@ function editElementFromTable(id,name,price,quantity) {
     activeRow.children[2].textContent = price;
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
+
+    localStorage.removeItem("paragon")
+    localStorage.clear("paragon")
+    let json = JSON.stringify(Serialize(table, table.children.length))
+    localStorage.setItem("paragon", json)
 }
 function createForm(buttonText, id,name,price,quantity) {
     form = document.createElement("form");
@@ -313,4 +332,33 @@ function changeButtons(element1,element2) {
     element2.children[2].textContent = price;
     element2.children[3].textContent = quantity;
     element2.children[4].textContent = element2.children[2].textContent * element2.children[3].textContent;
+}
+let json = JSON.stringify(Serialize(table, table.children.length))
+localStorage.setItem("paragon", json)
+
+function Serialize(item, index){
+    array = new Array()
+    if(!item.children[1]){
+        return array;
+    }
+    else{
+        for(let i = 1; i < index; i++){
+            let price = parseFloat(item.children[i].children[2].textContent);
+            price = Math.floor(parseFloat(price)*100)/100
+            console.log(typeof price)
+            var obj = {
+                Nazwa: item.children[i].children[1].textContent,
+                Price: price,
+                Quantity: parseInt(item.children[i].children[3].textContent)
+            }
+            array.push(obj)
+        }
+        return array;
+    }
+}
+function Deserialize(array){
+    array.forEach(element => {
+        console.log(typeof element.Price + "Deserialize")
+        addNewElementToTable(element.Nazwa, Math.floor(parseFloat(element.Price)*100)/100, element.Quantity);  
+    });
 }
