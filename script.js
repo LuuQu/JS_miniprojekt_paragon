@@ -8,8 +8,8 @@
 	5. Przesuwanie elementów    -----------------------------  Done
 	6. Dodanie formularza   ---------------------------------  Done
 	7. Dodanie komunikatów po każdej z czynności    ---------  
-    8. Utworzenie LocalStorage  -----------------------------  
-    9. Pobieranie danych z LocalStorage i ich wyświetlenie --  
+    8. Utworzenie LocalStorage  -----------------------------  DONE
+    9. Pobieranie danych z LocalStorage i ich wyświetlenie --  DONE
     10. Dodanie przycisku do edycji -------------------------  Done
     11. Dodanie przycisku do usuwania   ---------------------  Done
     12. Dodanie przycisku do przesunięcia produktu w górę  --  Done
@@ -27,9 +27,9 @@ console.log(paragon)
 Deserialize(paragon)
 localStorage.removeItem("paragon")
 localStorage.clear("paragon")
-addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
-addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
-addNewElementToTable("Jabłko",0.5,10);   //Test dla dodawania elementu
+//addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
+//addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
+//addNewElementToTable("Jabłko",0.5,10);   //Test dla dodawania elementu
 //addNewElementToTable("Woda",0.9,20);    //Test dla dodawania elementu
 //deleteElementFromTable(1);                //Test dla usuwania elementu
 function initializeTable() {
@@ -345,7 +345,6 @@ function Serialize(item, index){
         for(let i = 1; i < index; i++){
             let price = parseFloat(item.children[i].children[2].textContent);
             price = Math.floor(parseFloat(price)*100)/100
-            console.log(typeof price)
             var obj = {
                 Nazwa: item.children[i].children[1].textContent,
                 Price: price,
@@ -358,7 +357,6 @@ function Serialize(item, index){
 }
 function Deserialize(array){
     array.forEach(element => {
-        console.log(typeof element.Price + "Deserialize")
         addNewElementToTable(element.Nazwa, Math.floor(parseFloat(element.Price)*100)/100, element.Quantity);  
     });
 }
