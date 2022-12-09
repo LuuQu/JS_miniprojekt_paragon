@@ -96,7 +96,6 @@ input {
   width: 250px;
   margin: 20px;
 }
-
 form {
   text-align: center;
   margin: 30px;
@@ -133,4 +132,9 @@ input {
   background-color: #F8D7DA;
   border: 1px solid #ff969e;
   color: #721C24;
+}
+#add-alert{
+  background-color: #D4EDDA;
+  border: 1px solid #a6e4b4;
+  color: #155724;
 }

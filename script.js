@@ -17,7 +17,6 @@
 	
 =====================================================================
 */
-
 var table = document.createElement("table");
 var form;
 initializeTable();
@@ -215,6 +214,7 @@ function addNewElementToTable(name, price, quantity) {
     }
     table.children[number].children[1].textContent = Math.floor((parseFloat(table.children[number].children[1].textContent) + price*quantity)*100)/100;
     table.insertBefore(row,table.children[number]);
+    openPopup(2);
 }
 function deleteElementFromTable(id) {
     let number = table.children.length-1;
@@ -232,7 +232,7 @@ function deleteElementFromTable(id) {
     else if(id == (table.children.length-2) && number > 2) {
         addArrow(table.children[table.children.length-3].children[6],"arrow up");
     }
-    openPopup(true);
+    openPopup(0);
     table.children[id].remove();
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
@@ -258,7 +258,7 @@ function editElementFromTable(id,name,price,quantity) {
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
     table.children[number-1].children[1].textContent = Math.floor((parseFloat(table.children[number-1].children[1].textContent) - oldSum + price*quantity)*100)/100;
-    openPopup(false)
+    openPopup(1)
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
     let json = JSON.stringify(Serialize(table, table.children.length))
@@ -356,8 +356,8 @@ function changeButtons(element1,element2) {
     element2.children[3].textContent = quantity;
     element2.children[4].textContent = element2.children[2].textContent * element2.children[3].textContent;
 }
-function openPopup(isDelete){
-    if(isDelete){
+function openPopup(typeOfPopup){
+    if(typeOfPopup == 0){
         let div = document.createElement("div")
         div.id = "delete-alert"
         div.role = "alert"
@@ -368,7 +368,7 @@ function openPopup(isDelete){
             div.remove();
           }, 4000);
     }
-    else{
+    else if(typeOfPopup == 1){
         let div = document.createElement("div")
         div.id = "edit-alert"
         div.role = "alert"
@@ -379,7 +379,17 @@ function openPopup(isDelete){
             div.remove();
           }, 4000);
     }
-
+    else if(typeOfPopup == 2) {
+        let div = document.createElement("div")
+        div.id = "add-alert"
+        div.role = "alert"
+        div.textContent = "Dodano element do paragonu"
+        div.focus({preventScroll:false});
+        document.body.appendChild(div)
+        setTimeout(function(){
+            div.remove();
+          }, 4000);
+    }
 }
 let json = JSON.stringify(Serialize(table, table.children.length))
 localStorage.setItem("paragon", json)
