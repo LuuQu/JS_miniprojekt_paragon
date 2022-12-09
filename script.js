@@ -233,6 +233,7 @@ function deleteElementFromTable(id) {
     else if(id == (table.children.length-2) && number > 2) {
         addArrow(table.children[table.children.length-3].children[6],"arrow up");
     }
+    openPopup(true);
     table.children[id].remove();
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
@@ -256,7 +257,7 @@ function editElementFromTable(id,name,price,quantity) {
     activeRow.children[2].textContent = price;
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
-
+    openPopup(false)
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
     let json = JSON.stringify(Serialize(table, table.children.length))
@@ -269,6 +270,7 @@ function createForm(buttonText, id,name,price,quantity) {
 
     let nameLabel = document.createElement("label");
     let nameInput = document.createElement("input");
+    nameInput.id = "input";
     nameLabel.textContent = "Nazwa";
     if(name != null) {
         nameInput.value = name;
@@ -338,6 +340,7 @@ function createForm(buttonText, id,name,price,quantity) {
     form.appendChild(br);
     form.appendChild(applyButton);
     document.body.appendChild(form);
+    document.getElementById("input").focus();
 }
 function changeButtons(element1,element2) {
     let name = element1.children[1].textContent;
@@ -351,6 +354,31 @@ function changeButtons(element1,element2) {
     element2.children[2].textContent = price;
     element2.children[3].textContent = quantity;
     element2.children[4].textContent = element2.children[2].textContent * element2.children[3].textContent;
+}
+function openPopup(isDelete){
+    if(isDelete){
+        let div = document.createElement("div")
+        div.id = "delete-alert"
+        div.role = "alert"
+        div.textContent = "Usunięto element z paragonu"
+        div.focus({preventScroll:false});
+        document.body.appendChild(div)
+        setTimeout(function(){
+            div.remove();
+          }, 4000);
+    }
+    else{
+        let div = document.createElement("div")
+        div.id = "edit-alert"
+        div.role = "alert"
+        div.textContent = "Edytowano element z paragonu"
+        div.focus({preventScroll:false});
+        document.body.appendChild(div)
+        setTimeout(function(){
+            div.remove();
+          }, 4000);
+    }
+
 }
 let json = JSON.stringify(Serialize(table, table.children.length))
 localStorage.setItem("paragon", json)
