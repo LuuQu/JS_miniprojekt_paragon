@@ -1,98 +1,131 @@
 body {
-    background-color: #001247;
+  background-color: #001247;
 }
-table, tr {
-    background-color: #DDCBFF;
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin: auto;
+
+table,
+tr {
+  background-color: #DDCBFF;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: auto;
 }
+
 table {
-    margin-top: 100px;
+  margin-top: 100px;
 }
+
 td {
-    width: 150px;
-    text-align: center;
+  width: 150px;
+  text-align: center;
 }
+
 input {
-    margin: 3px;
+  margin: 3px;
 }
+
 .arrow {
-    border: solid black;
-    border-width: 0 5px 5px 0;
-    display: inline-block;
-    padding: 5px;
-    margin: 3px;
-  }
-  
-  .up {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-  }
-  
-  .down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-  }
-  .edit {
-    background-color: #d8b000;
-    border:none;
-    border-radius: 10px;
-    color: #001247;
-    padding: 10px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 120px;
-  }
-  .delete {
-    background-color: #b30303;
-    border:none;
-    border-radius: 10px;
-    color: #d8c6c6;
-    padding: 10px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 120px;
-  }
-  .new {
-    background-color: #12b303;
-    border:none;
-    border-radius: 10px;
-    color: #d8c6c6;
-    padding: 10px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 250px;
-  }
-  .addFromForm {
-    background-color: #12b303;
-    border:none;
-    border-radius: 10px;
-    color: #f0f0f0;
-    padding: 10px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 250px;
-    margin: 20px;
-  }
-  form{
-    text-align: center;
-    margin: 30px;
-  }
-  label {
-    color: #d8c6c6;
-  }
-  input {
-    border:none;
-    padding: 10px 60px;
-    border-radius: 10px;
-  }
+  border: solid black;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 5px;
+  margin: 3px;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.edit {
+  background-color: #d8b000;
+  border: none;
+  border-radius: 10px;
+  color: #001247;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 120px;
+}
+
+.delete {
+  background-color: #b30303;
+  border: none;
+  border-radius: 10px;
+  color: #d8c6c6;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 120px;
+}
+
+.new {
+  background-color: #12b303;
+  border: none;
+  border-radius: 10px;
+  color: #d8c6c6;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 250px;
+}
+
+.addFromForm {
+  background-color: #12b303;
+  border: none;
+  border-radius: 10px;
+  color: #f0f0f0;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 250px;
+  margin: 20px;
+}
+
+form {
+  text-align: center;
+  margin: 30px;
+}
+
+label {
+  color: #d8c6c6;
+}
+
+input {
+  border: none;
+  padding: 10px 60px;
+  border-radius: 10px;
+}
+
+[role=alert]{
+  display: block;
+  position: fixed;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  align: center;
+  top: 0;
+  left: 0;
+  margin: 30px;
+}
+#edit-alert{
+  background-color: #FFF3CD;
+  color: #856404;
+}
+#delete-alert{
+  background-color: #F8D7DA;
+  color: #721C24;
+}
