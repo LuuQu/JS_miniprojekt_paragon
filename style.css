@@ -1,10 +1,10 @@
 body {
-  background-color: #001247;
+  background-color: #272F38;
 }
 
 table,
 tr {
-  background-color: #DDCBFF;
+  background-color: #ebe0ff;
   padding: 5px;
   border: 1px solid black;
   border-radius: 10px;
@@ -12,9 +12,11 @@ tr {
 }
 
 table {
-  margin-top: 100px;
+  margin-top: 80px;
 }
-
+tr {
+  box-shadow: 0 0 4px rgb(180, 180, 180);
+}
 td {
   width: 150px;
   text-align: center;
@@ -43,10 +45,10 @@ input {
 }
 
 .edit {
-  background-color: #d8b000;
+  background-color: #d3b016;
   border: none;
   border-radius: 10px;
-  color: #001247;
+  color: #000000;
   padding: 10px 32px;
   text-align: center;
   text-decoration: none;
@@ -56,10 +58,10 @@ input {
 }
 
 .delete {
-  background-color: #b30303;
+  background-color: #d40d0d;
   border: none;
   border-radius: 10px;
-  color: #d8c6c6;
+  color: #ffffff;
   padding: 10px 32px;
   text-align: center;
   text-decoration: none;
@@ -69,10 +71,10 @@ input {
 }
 
 .new {
-  background-color: #12b303;
+  background-color: #32a527;
   border: none;
   border-radius: 10px;
-  color: #d8c6c6;
+  color: #ffffff;
   padding: 10px 32px;
   text-align: center;
   text-decoration: none;
@@ -82,7 +84,7 @@ input {
 }
 
 .addFromForm {
-  background-color: #12b303;
+  background-color: #32a527;
   border: none;
   border-radius: 10px;
   color: #f0f0f0;
@@ -116,16 +118,19 @@ input {
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  align: center;
   top: 0;
   left: 0;
   margin: 30px;
+  margin-left: 20px;
+  width: 210px;
 }
 #edit-alert{
   background-color: #FFF3CD;
+  border: 1px solid #ffde70;
   color: #856404;
 }
 #delete-alert{
   background-color: #F8D7DA;
+  border: 1px solid #ff969e;
   color: #721C24;
 }
