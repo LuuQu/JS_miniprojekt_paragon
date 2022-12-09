@@ -7,7 +7,7 @@
 	4. Edycja istniejących elementów    ---------------------  Done
 	5. Przesuwanie elementów    -----------------------------  Done
 	6. Dodanie formularza   ---------------------------------  Done
-	7. Dodanie komunikatów po każdej z czynności    ---------  DONE
+	7. Dodanie komunikatów po każdej z czynności    ---------  
     8. Utworzenie LocalStorage  -----------------------------  DONE
     9. Pobieranie danych z LocalStorage i ich wyświetlenie --  DONE
     10. Dodanie przycisku do edycji -------------------------  Done
@@ -24,7 +24,9 @@ initializeTable();
 
 let paragon = JSON.parse(localStorage.getItem("paragon"))
 console.log(paragon)
-Deserialize(paragon)
+if(paragon != null) {
+    Deserialize(paragon)
+}
 localStorage.removeItem("paragon")
 localStorage.clear("paragon")
 addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
@@ -57,7 +59,24 @@ function initializeTable() {
     cell.appendChild(button);
     row.appendChild(cell);
     table.appendChild(row);
+    AddSum();
     document.body.appendChild(table);
+}
+function AddSum() {
+    let tr = document.createElement("tr");
+    let sum = document.createElement("td");
+    let value = document.createElement("td");
+    let pln = document.createElement("td");
+    pln.textContent = "PLN"
+    sum.textContent = "RAZEM";
+    sum.colSpan = 4;
+    value.textContent = 0;
+    tr.appendChild(sum);
+    tr.appendChild(value);
+    tr.appendChild(pln);
+    tr.style.height = "80px";
+    tr.style.border = "1px solid black"
+    table.appendChild(tr);
 }
 function addElementToRow(row,text) {
     let element = document.createElement("td");
@@ -175,7 +194,7 @@ function addButtons(row) {
     
 }
 function addNewElementToTable(name, price, quantity) {
-    let number = table.children.length;
+    let number = table.children.length - 1;
     let row = document.createElement("tr");
     addElementToRow(row,number);
     addElementToRow(row,name);
@@ -195,10 +214,12 @@ function addNewElementToTable(name, price, quantity) {
             addArrow(prevRow.children[6]);
         }
     }
-    table.appendChild(row);
+    table.children[number].children[1].textContent = Math.floor((parseFloat(table.children[number].children[1].textContent) + price*quantity)*100)/100;
+    table.insertBefore(row,table.children[number]);
 }
 function deleteElementFromTable(id) {
-    let number = table.children.length;
+    let number = table.children.length-1;
+    table.children[number].children[1].textContent = Math.floor((parseFloat(table.children[number].children[1].textContent) - parseFloat(table.children[id].children[2].textContent)*parseFloat(table.children[id].children[3].textContent) )*100)/100;
     if(number < (id+1)) {
         return;
     }
@@ -209,11 +230,9 @@ function deleteElementFromTable(id) {
     else if(id == 1 && number > 2) {
         addArrow(table.children[2].children[6],"arrow down");
     }
-    else if(id == (table.children.length-1) && number > 2) {
-        addArrow(table.children[table.children.length-2].children[6],"arrow up");
+    else if(id == (table.children.length-2) && number > 2) {
+        addArrow(table.children[table.children.length-3].children[6],"arrow up");
     }
-    
-    openPopup(true)
     table.children[id].remove();
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
@@ -237,7 +256,7 @@ function editElementFromTable(id,name,price,quantity) {
     activeRow.children[2].textContent = price;
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
-    openPopup(false)
+
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
     let json = JSON.stringify(Serialize(table, table.children.length))
@@ -250,7 +269,6 @@ function createForm(buttonText, id,name,price,quantity) {
 
     let nameLabel = document.createElement("label");
     let nameInput = document.createElement("input");
-    nameInput.id = "input"
     nameLabel.textContent = "Nazwa";
     if(name != null) {
         nameInput.value = name;
@@ -320,7 +338,6 @@ function createForm(buttonText, id,name,price,quantity) {
     form.appendChild(br);
     form.appendChild(applyButton);
     document.body.appendChild(form);
-    document.getElementById("input").focus();
 }
 function changeButtons(element1,element2) {
     let name = element1.children[1].textContent;
@@ -335,33 +352,6 @@ function changeButtons(element1,element2) {
     element2.children[3].textContent = quantity;
     element2.children[4].textContent = element2.children[2].textContent * element2.children[3].textContent;
 }
-function openPopup(isDelete){
-    if(isDelete){
-        let div = document.createElement("div")
-        div.id = "delete-alert"
-        div.role = "alert"
-        div.textContent = "Usunięto element z paragonu"
-        div.focus({preventScroll:false});
-        document.body.appendChild(div)
-        setTimeout(function(){
-            div.remove();
-          }, 4000);
-    }
-    else{
-        let div = document.createElement("div")
-        div.id = "edit-alert"
-        div.role = "alert"
-        div.textContent = "Edytowano element z paragonu"
-        div.focus({preventScroll:false});
-        document.body.appendChild(div)
-        setTimeout(function(){
-            div.remove();
-          }, 4000);
-    }
-    
-}
-
-
 let json = JSON.stringify(Serialize(table, table.children.length))
 localStorage.setItem("paragon", json)
 
@@ -371,7 +361,7 @@ function Serialize(item, index){
         return array;
     }
     else{
-        for(let i = 1; i < index; i++){
+        for(let i = 1; i < index-1; i++){
             let price = parseFloat(item.children[i].children[2].textContent);
             price = Math.floor(parseFloat(price)*100)/100
             var obj = {
