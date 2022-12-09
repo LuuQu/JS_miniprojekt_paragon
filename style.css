@@ -129,3 +129,15 @@ input {
   background-color: #F8D7DA;
   color: #721C24;
 }
+#sum_element{
+  background-color: #DDCBFF;
+  display: block;
+  position:sticky;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  align: center;
+  top: 0;
+  left: 0;
+  margin: 30px;
+}

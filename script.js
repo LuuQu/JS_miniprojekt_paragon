@@ -23,15 +23,12 @@ var form;
 initializeTable();
 
 let paragon = JSON.parse(localStorage.getItem("paragon"))
-console.log(paragon)
-Deserialize(paragon)
-localStorage.removeItem("paragon")
-localStorage.clear("paragon")
-addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
-addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
-//addNewElementToTable("Jabłko",0.5,10);   //Test dla dodawania elementu
-//addNewElementToTable("Woda",0.9,20);    //Test dla dodawania elementu
-//deleteElementFromTable(1);                //Test dla usuwania elementu
+if(paragon != null){
+    Deserialize(paragon)
+    localStorage.removeItem("paragon")
+    localStorage.clear("paragon")
+}
+Summary()
 function initializeTable() {
     let row = document.createElement("tr");
     addElementToRow(row,"LP");
@@ -196,6 +193,7 @@ function addNewElementToTable(name, price, quantity) {
         }
     }
     table.appendChild(row);
+    Summary()
 }
 function deleteElementFromTable(id) {
     let number = table.children.length;
@@ -214,6 +212,7 @@ function deleteElementFromTable(id) {
     }
     
     openPopup(true)
+    Summary()
     table.children[id].remove();
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
@@ -238,6 +237,7 @@ function editElementFromTable(id,name,price,quantity) {
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
     openPopup(false)
+    Summary()
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
     let json = JSON.stringify(Serialize(table, table.children.length))
@@ -358,9 +358,27 @@ function openPopup(isDelete){
             div.remove();
           }, 4000);
     }
-    
 }
-
+function Summary(){
+    if(document.getElementById("sum_element") == null){
+        let sum = 0;
+        for(let i = 1; i < table.children.length; i++){
+            sum += Math.floor(parseFloat(table.children[i].children[4].textContent)*100)/100
+        }
+        let sum_element = document.createElement("div")
+        sum_element.id = "sum_element"
+        sum_element.textContent = "RAZEM " + sum
+        document.body.appendChild(sum_element)
+    }
+    else{
+        let sum = 0;
+        for(let i = 1; i < table.children.length; i++){
+            sum += Math.floor(parseFloat(table.children[i].children[4].textContent)*100)/100
+        }
+        let sum_element = document.getElementById("sum_element")
+        sum_element.textContent = "RAZEM " + sum + "PLN"
+    }
+}
 
 let json = JSON.stringify(Serialize(table, table.children.length))
 localStorage.setItem("paragon", json)
