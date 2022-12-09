@@ -214,7 +214,6 @@ function addNewElementToTable(name, price, quantity) {
     }
     table.children[number].children[1].textContent = Math.floor((parseFloat(table.children[number].children[1].textContent) + price*quantity)*100)/100;
     table.insertBefore(row,table.children[number]);
-    openPopup(2);
 }
 function deleteElementFromTable(id) {
     let number = table.children.length-1;
@@ -319,6 +318,7 @@ function createForm(buttonText, id,name,price,quantity) {
         else {
             addNewElementToTable(nameInput.value,Math.floor(parseFloat(priceInput.value)*100)/100,parseInt(quantityInput.value));
         }
+        openPopup(2);
         form.remove();
         form = null;
     })
