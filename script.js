@@ -75,7 +75,6 @@ function AddSum() {
     tr.appendChild(value);
     tr.appendChild(pln);
     tr.style.height = "80px";
-    tr.style.border = "1px solid black"
     table.appendChild(tr);
 }
 function addElementToRow(row,text) {
@@ -253,10 +252,12 @@ function editElementFromTable(id,name,price,quantity) {
         return;
     }
     let activeRow = table.children[id];
+    let oldSum = parseFloat(activeRow.children[4].textContent);
     activeRow.children[1].textContent = name;
     activeRow.children[2].textContent = price;
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
+    table.children[number-1].children[1].textContent = Math.floor((parseFloat(table.children[number-1].children[1].textContent) - oldSum + price*quantity)*100)/100;
     openPopup(false)
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
