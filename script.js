@@ -7,7 +7,7 @@
 	4. Edycja istniejących elementów    ---------------------  Done
 	5. Przesuwanie elementów    -----------------------------  Done
 	6. Dodanie formularza   ---------------------------------  Done
-	7. Dodanie komunikatów po każdej z czynności    ---------  
+	7. Dodanie komunikatów po każdej z czynności    ---------  DONE
     8. Utworzenie LocalStorage  -----------------------------  DONE
     9. Pobieranie danych z LocalStorage i ich wyświetlenie --  DONE
     10. Dodanie przycisku do edycji -------------------------  Done
@@ -27,8 +27,8 @@ console.log(paragon)
 Deserialize(paragon)
 localStorage.removeItem("paragon")
 localStorage.clear("paragon")
-//addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
-//addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
+addNewElementToTable("Gruszka",1.5,3);    //Test dla dodawania elementu
+addNewElementToTable("Banan",2,8);        //Test dla dodawania elementu
 //addNewElementToTable("Jabłko",0.5,10);   //Test dla dodawania elementu
 //addNewElementToTable("Woda",0.9,20);    //Test dla dodawania elementu
 //deleteElementFromTable(1);                //Test dla usuwania elementu
@@ -212,6 +212,8 @@ function deleteElementFromTable(id) {
     else if(id == (table.children.length-1) && number > 2) {
         addArrow(table.children[table.children.length-2].children[6],"arrow up");
     }
+    
+    openPopup(true)
     table.children[id].remove();
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
@@ -224,8 +226,6 @@ function deleteElementFromTable(id) {
         id++;
         table.children[id-1].children[0].textContent--;
     }
-    
-
 }
 function editElementFromTable(id,name,price,quantity) {
     let number = table.children.length;
@@ -237,7 +237,7 @@ function editElementFromTable(id,name,price,quantity) {
     activeRow.children[2].textContent = price;
     activeRow.children[3].textContent = quantity;
     activeRow.children[4].textContent = price*quantity;
-
+    openPopup(false)
     localStorage.removeItem("paragon")
     localStorage.clear("paragon")
     let json = JSON.stringify(Serialize(table, table.children.length))
@@ -250,6 +250,7 @@ function createForm(buttonText, id,name,price,quantity) {
 
     let nameLabel = document.createElement("label");
     let nameInput = document.createElement("input");
+    nameInput.id = "input"
     nameLabel.textContent = "Nazwa";
     if(name != null) {
         nameInput.value = name;
@@ -319,6 +320,7 @@ function createForm(buttonText, id,name,price,quantity) {
     form.appendChild(br);
     form.appendChild(applyButton);
     document.body.appendChild(form);
+    document.getElementById("input").focus();
 }
 function changeButtons(element1,element2) {
     let name = element1.children[1].textContent;
@@ -333,6 +335,33 @@ function changeButtons(element1,element2) {
     element2.children[3].textContent = quantity;
     element2.children[4].textContent = element2.children[2].textContent * element2.children[3].textContent;
 }
+function openPopup(isDelete){
+    if(isDelete){
+        let div = document.createElement("div")
+        div.id = "delete-alert"
+        div.role = "alert"
+        div.textContent = "Usunięto element z paragonu"
+        div.focus({preventScroll:false});
+        document.body.appendChild(div)
+        setTimeout(function(){
+            div.remove();
+          }, 4000);
+    }
+    else{
+        let div = document.createElement("div")
+        div.id = "edit-alert"
+        div.role = "alert"
+        div.textContent = "Edytowano element z paragonu"
+        div.focus({preventScroll:false});
+        document.body.appendChild(div)
+        setTimeout(function(){
+            div.remove();
+          }, 4000);
+    }
+    
+}
+
+
 let json = JSON.stringify(Serialize(table, table.children.length))
 localStorage.setItem("paragon", json)
 
